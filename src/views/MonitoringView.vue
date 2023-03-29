@@ -27,6 +27,15 @@
             </div>
         </li>
     </ul>
+    <div class="relative flex" v-if="state.monitoring && state.monitoring.appearances">
+        <ButterflyCard 
+            :key="appearance.id"
+            v-for="(appearance, index) in state.monitoring.appearances" 
+            :butterfly="appearance.butterfly" 
+            :index="index"
+            :expanded="true"
+            />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -34,9 +43,10 @@
     import makeRequest from '../utils/makeRequest'
     import type { Monitoring, ButterflyAppearance } from '../types/monitoring'
     import type { ApiResponse } from '../types/common'
+    import ButterflyCard from '../components/card/ButterflyCard.vue'
 
     interface MonitoringViewState {
-    monitoring: null | Monitoring
+        monitoring: null | Monitoring
     }
 
     const state: MonitoringViewState = reactive({
