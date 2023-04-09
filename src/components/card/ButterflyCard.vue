@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type { Butterfly } from '@/types/butterfly';
+import DayTime from '@/components/card/stats/DayTime.vue';
+import StatAppearances from '@/components/card/stats/StatAppearances.vue';
+import StatSize from '@/components/card/stats/StatSize.vue';
 import { computed } from 'vue';
 
 const props = defineProps<{
@@ -13,14 +16,16 @@ const butterflyImageUrl = computed(() => {
 });
 
 const butterflyCardPosition = computed(() => {
-    if (props.expanded) {
-        return {};
-    }
+    /* if (props.expanded) { */
+    /*     return {}; */
+    /* } */
     return {
         'z-index': props.index + 10,
         left: `${10 + 30 * props.index}px`
     };
 });
+
+const butterflyRarityClass = computed(() => `rarity-${props.butterfly.rarity}`);
 </script>
 
 <template>
@@ -28,35 +33,36 @@ const butterflyCardPosition = computed(() => {
         <h3 v-if="!expanded" class="card-text__side">{{ butterfly.scientific }}</h3>
         <div class="card-image background" :style="{ 'background-image': butterflyImageUrl }"></div>
         <div class="card-text">
-            <h3>{{ butterfly.scientific }}</h3>
-            <h5>
+            <h3 class="card-text__scientific">{{ butterfly.scientific }}</h3>
+            <h6 class="card-text__described">
                 <em>({{ butterfly.described }})</em>
-            </h5>
+            </h6>
+            <h4 class="card-text__common" v-if="butterfly.details && butterfly.details.length > 0">
+                <em>Common Name: {{ butterfly.details[0].common_name }}</em>
+            </h4>
             <p v-if="butterfly.details && butterfly.details.length > 0">
-                {{ butterfly.details[0].description.slice(0, 200) }}
-                {{ butterfly.details[0].description.length > 200 ? '...' : '' }}
+                {{ butterfly.details[0].description.slice(0, 210) }}
+                {{ butterfly.details[0].description.length > 210 ? '...' : '' }}
             </p>
         </div>
-        <div class="card-stats">
-            <div class="stat daytime">
-                <div class="value" title="Noturna">&#127769;</div>
-            </div>
-            <div class="stat">
-                <div class="value">{{ butterfly.appearances }}</div>
-                <div class="type">aparições</div>
-            </div>
-            <div class="stat">
-                <div class="value">{{ butterfly.size }}</div>
-                <!--<div class="type">envergadura</div>-->
-            </div>
+        <div :class="['card-stats', butterflyRarityClass]">
+            <DayTime :isDiurnal="butterfly.daytime == 'day'" />
+            <StatAppearances :appearances="butterfly.appearances" />
+            <StatSize :size="butterfly.size" />
         </div>
     </article>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .card:hover {
     /*   animation: pick 3s ease-in-out;*/
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+
+    z-index: 100 !important;
+
+    .card-text__side {
+        display: none;
+    }
 }
 
 .card {
@@ -76,78 +82,81 @@ const butterflyCardPosition = computed(() => {
 }
 
 .card-image {
-    height: 210px;
+    height: 190px;
     overflow: hidden;
-}
-.card-text {
-    height: 210px;
-}
-.card-stats {
-    height: 80px;
-}
-
-.card-image.background {
-    background-position: center;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    background-size: cover;
-}
-
-.card-image img {
-    max-width: 100%;
-    /*height: auto;*/
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    object-fit: cover;
-    /*object-position: 80% 50%;*/
+    &.background {
+        background-position: center;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        background-size: cover;
+    }
+    img {
+        max-width: 100%;
+        /*height: auto;*/
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        object-fit: cover;
+        /*object-position: 80% 50%;*/
+    }
 }
 
 .card-text {
+    height: 250px;
     padding: 15px 25px;
-}
 
-.card-text p {
-    color: grey;
-    font-size: 15px;
-    font-weight: 300;
-}
+    .card-text__common {
+        @apply text-gray-500 mb-1;
+    }
 
-.card-text h3 {
-    margin: 0px;
-    font-size: 18px;
-}
+    .card-text__described {
+        @apply text-sm text-gray-400;
+    }
 
-.card-text h5 {
-    margin-top: 0px;
-    color: grey;
+    p {
+        color: grey;
+        font-size: 15px;
+        font-weight: 300;
+    }
+
+    h3 {
+        margin: 0px;
+        font-size: 18px;
+    }
+
+    h5 {
+        margin-top: 0px;
+        color: grey;
+    }
 }
 
 .card-stats {
+    height: 60px;
     display: flex;
     width: 100%;
-    justify-content: space-around;
     align-items: center;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     background: rgb(22 163 74);
-}
+    .stat {
+        width: calc(100% / 3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
 
-.card-stats .stat {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+        color: white;
+        padding: 10px;
 
-    color: white;
-    padding: 10px;
-}
-
-.card-stats .stat.daytime {
-    font-size: 24px;
-}
-
-.card:hover {
-    z-index: 100 !important;
+        &.daytime {
+            font-size: 24px;
+        }
+    }
+    &.rarity-rare {
+        @apply bg-cyan-700;
+    }
+    &.rarity-ultrarare {
+        @apply bg-amber-400;
+    }
 }
 
 .card-text__side {
@@ -163,9 +172,5 @@ const butterflyCardPosition = computed(() => {
     text-orientation: mixed;
     color: #4d4d4d;
     z-index: 100;
-}
-
-.card:hover .card-text__side {
-    display: none;
 }
 </style>

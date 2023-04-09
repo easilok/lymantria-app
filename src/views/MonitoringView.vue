@@ -21,7 +21,7 @@
             v-for="(appearance, index) in state.monitoring.appearances"
             :butterfly="appearance.butterfly"
             :index="index"
-            :expanded="state.monitoring.appearances.length == 1"
+            :expanded="index + 1 >= state.monitoring.appearances.length"
         />
     </div>
 </template>
@@ -51,10 +51,17 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .butterfly-exhibit {
-    overflow: scroll;
+    overflow: auto;
     height: 600px;
+    width: 100%;
+    padding: 15px;
+    .butterfly-exhibit__container {
+        height: 100%;
+        width: 100%;
+        overflow-y: auto;
+    }
 }
 
 .butterfly-exhibit .card {
