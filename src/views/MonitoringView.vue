@@ -1,20 +1,14 @@
 <template>
-    <h3 class="mb-2 font-bold text-lg">Monitoring Details</h3>
-    <div v-if="state.monitoring">
-        <div>
-            <label class="font-bold">Name: </label>
-            <span>{{ state.monitoring.name }}</span>
-        </div>
-        <div>
-            <label class="font-bold">Local: </label>
-            <span>{{ state.monitoring.local }}</span>
-        </div>
-        <div>
-            <label class="font-bold">Host: </label>
-            <span>{{ state.monitoring.user.name }}</span>
-        </div>
-    </div>
-    <h3 class="my-2 font-bold text-lg">Monitoring Butterflies</h3>
+    <h2 class="my-2 font-bold text-xl inline">Welcome!</h2>
+    <h5 class="inline ml-2 text-gray-500 italic">
+        Here is the last Butterfly deck
+        <v-icon
+            v-if="state.monitoring"
+            name="bi-info-circle"
+            scale="0.8"
+            :title="'from: ' + state.monitoring.registered_at"
+        />
+    </h5>
     <div class="relative flex butterfly-exhibit" v-if="state.monitoring && state.monitoring.appearances">
         <ButterflyCard
             :key="appearance.id"
@@ -22,6 +16,36 @@
             :butterfly="appearance.butterfly"
             :index="index"
             :expanded="index + 1 >= state.monitoring.appearances.length"
+        />
+    </div>
+    <hr />
+    <h3 class="my-2 font-bold text-lg">Details</h3>
+    <div class="monitoring-details__container" v-if="state.monitoring">
+        <MonitoringMap>
+            <div>
+                <label class="font-bold">Name: </label>
+                <span>{{ state.monitoring.name }}</span>
+            </div>
+            <div>
+                <label class="font-bold">Local: </label>
+                <span>{{ state.monitoring.local }}</span>
+            </div>
+            <div>
+                <label class="font-bold">Host: </label>
+                <span>{{ state.monitoring.user.name }}</span>
+            </div>
+        </MonitoringMap>
+        <MonitoringEnvironment
+            :hostedBy="state.monitoring.user.name"
+            :temperature="state.monitoring.temperature"
+            :humidity="state.monitoring.humidity"
+            :wind="state.monitoring.wind"
+            :sky="state.monitoring.sky"
+        />
+        <MonitoringStats
+            :registeredAt="state.monitoring.registered_at"
+            :timestampEnd="state.monitoring.timestamp_end"
+            :appearances="state.monitoring.appearances"
         />
     </div>
 </template>
@@ -32,6 +56,9 @@ import makeRequest from '../utils/makeRequest';
 import type { Monitoring } from '../types/monitoring';
 import type { ApiResponse } from '../types/common';
 import ButterflyCard from '../components/card/ButterflyCard.vue';
+import MonitoringMap from '../components/monitoring/MonitoringMap.vue';
+import MonitoringEnvironment from '../components/monitoring/MonitoringEnvironment.vue';
+import MonitoringStats from '../components/monitoring/MonitoringStats.vue';
 
 interface MonitoringViewState {
     monitoring: null | Monitoring;
@@ -62,9 +89,16 @@ onMounted(async () => {
         width: 100%;
         overflow-y: auto;
     }
+    .card {
+        position: absolute;
+    }
 }
 
-.butterfly-exhibit .card {
-    position: absolute;
+.monitoring-details__container {
+    @apply flex flex-wrap;
+    width: 100%;
+    > * {
+        width: calc(100% / 3);
+    }
 }
 </style>

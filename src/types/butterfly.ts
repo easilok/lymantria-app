@@ -8,8 +8,9 @@ export type ButterflyDaytime = 'day' | 'night';
 export interface Butterfly {
     id: number;
     scientific: string;
-    user_id: number;
     described: string;
+    family: string;
+    user_id: number;
     rarity: ButterflyRarity;
     daytime: ButterflyDaytime;
     group?: string;
