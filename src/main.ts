@@ -7,9 +7,35 @@ import router from './router';
 import './assets/main.css';
 
 import { OhVueIcon, addIcons } from 'oh-vue-icons';
-import { LaSun, PrMoon, LaEye, CoResizeWidth, FcBinoculars, FaBinoculars, BiInfoCircle } from 'oh-vue-icons/icons';
+import {
+    LaSun,
+    PrMoon,
+    LaEye,
+    CoResizeWidth,
+    FcBinoculars,
+    FaBinoculars,
+    BiInfoCircle,
+    BiWind,
+    WiThermometer,
+    BiDroplet,
+    CoUser,
+    BiCloudSun
+} from 'oh-vue-icons/icons';
 
-addIcons(LaSun, PrMoon, LaEye, CoResizeWidth, FcBinoculars, FaBinoculars, BiInfoCircle);
+addIcons(
+    LaSun,
+    PrMoon,
+    LaEye,
+    CoResizeWidth,
+    FcBinoculars,
+    FaBinoculars,
+    BiInfoCircle,
+    BiWind,
+    WiThermometer,
+    BiDroplet,
+    CoUser,
+    BiCloudSun
+);
 
 const app = createApp(App);
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { ButterflyAppearance } from '@/types/ButterflyAppearance';
+import dayjs from 'dayjs';
 
 const props = defineProps<{
     registeredAt: string;
@@ -9,14 +10,14 @@ const props = defineProps<{
 }>();
 
 const monitoringDate = computed(() => {
-    // TODO - Format only date
-    return props.registeredAt;
+    const parsedDate = dayjs(props.registeredAt);
+    return parsedDate.format('DD-MM-YYYY');
 });
 
 const monitoringDuration = computed(() => {
-    // TODO - Format interval with parsed dates
-    const end = props.timestampEnd || '';
-    return `${props.registeredAt} - ${end}`;
+    const parsedDate = dayjs(props.registeredAt);
+    const end = dayjs(props.timestampEnd) || '';
+    return `${parsedDate.format('HH:mm')} - ${end.isValid() ? end.format('HH:mm') : '...'}`;
 });
 
 const monitoringButterflies = computed(() => {
@@ -26,6 +27,10 @@ const monitoringButterflies = computed(() => {
 });
 
 const monitoringSpecies = computed(() => {
+    return props.appearances.length;
+});
+
+const monitoringFamilies = computed(() => {
     const species: { [key: string]: number } = {};
 
     props.appearances.forEach((appearance) => {
@@ -41,24 +46,43 @@ const monitoringSpecies = computed(() => {
 </script>
 
 <template>
-    <div class="">
-        <div class="">
-            <span class="font-bold">Date: </span>
+    <div class="monitoring-stats">
+        <div class="monitoring-stats__stat">
+            <label class="font-bold">Date:</label>
             <span class="">{{ monitoringDate }}</span>
         </div>
-        <div class="">
-            <span class="font-bold">Duration: </span>
+        <div class="monitoring-stats__stat">
+            <label class="font-bold">Duration:</label>
             <span class="">{{ monitoringDuration }}</span>
         </div>
-        <div class="">
-            <span class="font-bold">Apperances: </span>
+        <div class="monitoring-stats__stat">
+            <label class="font-bold">Butterflies:</label>
             <span class="">{{ monitoringButterflies }}</span>
         </div>
-        <div class="">
-            <span class="font-bold">Species: </span>
+        <div class="monitoring-stats__stat">
+            <label class="font-bold">Species:</label>
             <span class="">{{ monitoringSpecies }}</span>
+        </div>
+        <div class="monitoring-stats__stat">
+            <label class="font-bold">Families:</label>
+            <span class="">{{ monitoringFamilies }}</span>
         </div>
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.monitoring-stats {
+    @apply px-4 border-l;
+    > * {
+        margin-bottom: 0.75rem;
+    }
+}
+
+.monitoring-stats__stat {
+    display: flex;
+    align-items: center;
+    label {
+        @apply mr-2;
+    }
+}
+</style>

@@ -22,31 +22,51 @@ const formatedHumidity = computed(() => {
     }
     return 'N/A';
 });
+
+const iconScale = computed(() => {
+    return 1.5;
+});
 </script>
 
 <template>
-    <div class="">
-        <div class="">
-            <span class="font-bold">By: </span>
+    <div class="monitoring-env">
+        <div class="monitoring-env__stat">
+            <v-icon class="monitorin-env__icon" :scale="iconScale" name="co-user" title="Registered by" />&nbsp;
             <span class="">{{ hostedBy }}</span>
         </div>
-        <div class="">
-            <span class="font-bold">Temperature: </span>
+        <div class="monitoring-env__stat">
+            <v-icon class="monitorin-env__icon" :scale="iconScale" name="wi-thermometer" title="Temperature" />&nbsp;
             <span class="">{{ formatedTemperature }}</span>
         </div>
-        <div class="">
-            <span class="font-bold">Humidity: </span>
+        <div class="monitoring-env__stat">
+            <v-icon class="monitorin-env__icon" :scale="iconScale" name="bi-droplet" title="Humidity" />&nbsp;
             <span class="">{{ formatedHumidity }}</span>
         </div>
-        <div class="">
-            <span class="font-bold">Wind: </span>
+        <div class="monitoring-env__stat">
+            <v-icon class="monitorin-env__icon" :scale="iconScale" name="bi-wind" title="Wind" />&nbsp;
             <span class="">{{ wind || 'N/A' }}</span>
         </div>
-        <div class="">
-            <span class="font-bold">Sky: </span>
+        <div class="monitoring-env__stat">
+            <v-icon class="monitorin-env__icon" :scale="iconScale" name="bi-cloud-sun" title="Sky" />&nbsp;
             <span class="">{{ sky || 'N/A' }}</span>
         </div>
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.monitoring-env {
+    @apply px-2 border-l;
+    > * {
+        margin-bottom: 0.3rem;
+    }
+}
+
+.monitoring-env__stat {
+    display: flex;
+    align-items: center;
+}
+
+.monitorin-env__icon {
+    width: 2rem;
+}
+</style>

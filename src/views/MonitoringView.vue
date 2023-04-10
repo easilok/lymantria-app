@@ -1,13 +1,8 @@
 <template>
     <h2 class="my-2 font-bold text-xl inline">Welcome!</h2>
-    <h5 class="inline ml-2 text-gray-500 italic">
+    <h5 class="inline text-gray-500 italic">
         Here is the last Butterfly deck
-        <v-icon
-            v-if="state.monitoring"
-            name="bi-info-circle"
-            scale="0.8"
-            :title="'from: ' + state.monitoring.registered_at"
-        />
+        <v-icon v-if="monitoringDate" name="bi-info-circle" scale="0.8" :title="'from: ' + monitoringDate" />
     </h5>
     <div class="relative flex butterfly-exhibit" v-if="state.monitoring && state.monitoring.appearances">
         <ButterflyCard
@@ -44,14 +39,15 @@
         />
         <MonitoringStats
             :registeredAt="state.monitoring.registered_at"
-            :timestampEnd="state.monitoring.timestamp_end"
+            :timestampEnd="state.monitoring.timestamp_end || ''"
             :appearances="state.monitoring.appearances"
         />
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
+import { computed, onMounted, reactive } from 'vue';
+import dayjs from 'dayjs';
 import makeRequest from '../utils/makeRequest';
 import type { Monitoring } from '../types/monitoring';
 import type { ApiResponse } from '../types/common';
@@ -66,6 +62,14 @@ interface MonitoringViewState {
 
 const state: MonitoringViewState = reactive({
     monitoring: null
+});
+
+const monitoringDate = computed(() => {
+    if (!state.monitoring) {
+        return '';
+    }
+    const parsedDate = dayjs(state.monitoring.registered_at);
+    return parsedDate.isValid() ? parsedDate.format('DD-MM-YYYY (HH:mm)') : '';
 });
 
 onMounted(async () => {
