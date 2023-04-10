@@ -16,7 +16,12 @@
     <hr />
     <h3 class="my-2 font-bold text-lg">Details</h3>
     <div class="monitoring-details__container" v-if="state.monitoring">
-        <MonitoringMap>
+        <MonitoringMap
+            :name="state.monitoring.name"
+            :host="state.monitoring.user.name"
+            :latitude="state.monitoring.latitude"
+            :longitude="state.monitoring.longitude"
+        >
             <div>
                 <label class="font-bold">Name: </label>
                 <span>{{ state.monitoring.name }}</span>
