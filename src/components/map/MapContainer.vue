@@ -39,7 +39,7 @@ onMounted(() => {
     // Create new the OpenLayers map
     new Map({
         // use the mapRoot ref to mount the map on the DOM
-        target: mapRoot.value,
+        target: mapRoot.value || undefined,
         layers: [
             // Background tiled layer
             new TileLayer({

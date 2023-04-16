@@ -72,7 +72,6 @@ const monitoringFamilies = computed(() => {
 
 <style scoped lang="scss">
 .monitoring-stats {
-    @apply px-4 border-l;
     > * {
         margin-bottom: 0.75rem;
     }

@@ -55,9 +55,8 @@ const iconScale = computed(() => {
 
 <style scoped lang="scss">
 .monitoring-env {
-    @apply px-2 border-l;
     > * {
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.7rem;
     }
 }
 

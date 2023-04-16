@@ -15,37 +15,32 @@
     </div>
     <hr />
     <h3 class="my-2 font-bold text-lg">Details</h3>
-    <div class="monitoring-details__container" v-if="state.monitoring">
+    <div class="flex flex-wrap flex-row sm:flex-row-reverse monitoring-details__container" v-if="state.monitoring">
+        <div class="monitoring-details__info sm:border-l-2 w-full sm:w-1/3 md:w-1/2">
+            <MonitoringEnvironment
+                class="sm:px-4 w-full sm:w-1/2"
+                :hostedBy="state.monitoring.user.name"
+                :temperature="state.monitoring.temperature"
+                :humidity="state.monitoring.humidity"
+                :wind="state.monitoring.wind"
+                :sky="state.monitoring.sky"
+            />
+            <hr class="my-4 sm:mb-0 w-11/12 self-center" />
+            <MonitoringStats
+                class="sm:px-4 w-full sm:w-1/2"
+                :registeredAt="state.monitoring.registered_at"
+                :timestampEnd="state.monitoring.timestamp_end || ''"
+                :appearances="state.monitoring.appearances"
+            />
+        </div>
+        <hr class="block sm:hidden my-4 w-11/12 self-center" />
         <MonitoringMap
+            class="w-full sm:w-2/3 md:w-1/2"
+            :local="state.monitoring.local"
             :name="state.monitoring.name"
             :host="state.monitoring.user.name"
             :latitude="state.monitoring.latitude"
             :longitude="state.monitoring.longitude"
-        >
-            <div>
-                <label class="font-bold">Name: </label>
-                <span>{{ state.monitoring.name }}</span>
-            </div>
-            <div>
-                <label class="font-bold">Local: </label>
-                <span>{{ state.monitoring.local }}</span>
-            </div>
-            <div>
-                <label class="font-bold">Host: </label>
-                <span>{{ state.monitoring.user.name }}</span>
-            </div>
-        </MonitoringMap>
-        <MonitoringEnvironment
-            :hostedBy="state.monitoring.user.name"
-            :temperature="state.monitoring.temperature"
-            :humidity="state.monitoring.humidity"
-            :wind="state.monitoring.wind"
-            :sky="state.monitoring.sky"
-        />
-        <MonitoringStats
-            :registeredAt="state.monitoring.registered_at"
-            :timestampEnd="state.monitoring.timestamp_end || ''"
-            :appearances="state.monitoring.appearances"
         />
     </div>
 </template>
@@ -92,7 +87,6 @@ onMounted(async () => {
     overflow: auto;
     height: 600px;
     width: 100%;
-    padding: 15px;
     .butterfly-exhibit__container {
         height: 100%;
         width: 100%;
@@ -104,10 +98,12 @@ onMounted(async () => {
 }
 
 .monitoring-details__container {
-    @apply flex flex-wrap;
     width: 100%;
-    > * {
-        width: calc(100% / 3);
-    }
+}
+
+.monitoring-details__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 </style>
