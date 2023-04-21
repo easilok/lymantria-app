@@ -18,7 +18,7 @@ const formatedTemperature = computed(() => {
 
 const formatedHumidity = computed(() => {
     if (props.humidity !== null) {
-        return `${props.humidity} ºC`;
+        return `${props.humidity} %`;
     }
     return 'N/A';
 });
