@@ -73,7 +73,7 @@ const monitoringDate = computed(() => {
 });
 
 onMounted(async () => {
-    const response = await makeRequest<undefined, ApiResponse<Monitoring>>('monitoring/1', 'get');
+    const response = await makeRequest<undefined, ApiResponse<Monitoring>>('monitoring/latest', 'get');
     if (response.status === 200) {
         const data = response.json as ApiResponse<Monitoring>;
         console.log(data.records);
@@ -87,6 +87,7 @@ onMounted(async () => {
     overflow: auto;
     height: 600px;
     width: 100%;
+    padding: 20px 10px;
     .butterfly-exhibit__container {
         height: 100%;
         width: 100%;
