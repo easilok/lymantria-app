@@ -48,6 +48,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive } from 'vue';
 import dayjs from 'dayjs';
+import { useRoute } from 'vue-router';
 import makeRequest from '../utils/makeRequest';
 import type { Monitoring } from '../types/monitoring';
 import type { ApiResponse } from '../types/common';
@@ -72,8 +73,14 @@ const monitoringDate = computed(() => {
     return parsedDate.isValid() ? parsedDate.format('DD-MM-YYYY (HH:mm)') : '';
 });
 
+const route = useRoute();
+
 onMounted(async () => {
-    const response = await makeRequest<undefined, ApiResponse<Monitoring>>('monitoring/latest', 'get');
+    let monitoringRequest = 'monitoring/latest';
+    if (route.params.idMonitoring) {
+        monitoringRequest = `monitoring/${route.params.idMonitoring}`;
+    }
+    const response = await makeRequest<undefined, ApiResponse<Monitoring>>(monitoringRequest, 'get');
     if (response.status === 200) {
         const data = response.json as ApiResponse<Monitoring>;
         console.log(data.records);

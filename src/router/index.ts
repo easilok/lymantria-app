@@ -11,6 +11,11 @@ const router = createRouter({
             component: MonitoringView
         },
         {
+            path: '/:idMonitoring',
+            name: 'monitoring-by-id',
+            component: MonitoringView
+        },
+        {
             path: '/docs',
             name: 'docs',
             component: DocsView
