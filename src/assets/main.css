@@ -7,9 +7,19 @@
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1rem 2rem;
+  /* padding: 1rem 2rem; */
 
   font-weight: normal;
+}
+
+.app-content {
+  margin: 1rem .5rem;
+}
+
+@media (min-width: 768px) {
+  .app-content {
+    margin: 1rem 2rem;
+  }
 }
 
 a,

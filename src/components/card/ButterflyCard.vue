@@ -9,6 +9,8 @@ const props = defineProps<{
     butterfly: Butterfly;
     index: number;
     expanded: boolean;
+    overlap: boolean;
+    vertical: boolean;
 }>();
 
 const butterflyImageUrl = computed(() => {
@@ -16,9 +18,10 @@ const butterflyImageUrl = computed(() => {
 });
 
 const butterflyCardPosition = computed(() => {
-    /* if (props.expanded) { */
-    /*     return {}; */
-    /* } */
+    if (!props.overlap || props.vertical) {
+        return {};
+    }
+
     return {
         'z-index': props.index + 10,
         left: `${10 + 30 * props.index}px`
@@ -29,8 +32,8 @@ const butterflyRarityClass = computed(() => `rarity-${props.butterfly.rarity}`);
 </script>
 
 <template>
-    <article class="card" :style="butterflyCardPosition">
-        <h3 v-if="!expanded" class="card-text__side">{{ butterfly.scientific }}</h3>
+    <article class="card" :class="{ overlap: overlap, vertical: vertical }" :style="butterflyCardPosition">
+        <h3 v-if="!expanded && overlap && !vertical" class="card-text__side">{{ butterfly.scientific }}</h3>
         <div class="card-image background" :style="{ 'background-image': butterflyImageUrl }"></div>
         <div class="card-text">
             <h3 class="card-text__scientific">{{ butterfly.scientific }}</h3>
@@ -79,6 +82,11 @@ const butterflyRarityClass = computed(() => `rarity-${props.butterfly.rarity}`);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
     font-family: roboto;
     text-align: center;
+    &.vertical {
+        margin: auto;
+        margin-bottom: 1rem;
+        overflow: visible;
+    }
 }
 
 .card-image {
@@ -164,8 +172,8 @@ const butterflyRarityClass = computed(() => `rarity-${props.butterfly.rarity}`);
     background-color: rgba(255, 255, 255, 0.3);
     border-top-left-radius: 15px;
     padding: 2px;
-    height: 210px;
-    width: 50px;
+    height: 200px;
+    width: 30px;
     /* left: -20px; */
     left: 0px;
     writing-mode: sideways-lr;
