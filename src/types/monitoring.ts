@@ -11,11 +11,16 @@ export interface Monitoring {
     obs: string;
     hosted_by: number;
     timestamp_end?: string;
-    temperature: number;
-    humidity: number;
-    wind: string;
-    precipitation: number;
-    sky: string;
+    temperature_start: number;
+    humidity_start: number;
+    wind_start: string;
+    precipitation_start: number;
+    sky_start: string;
+    temperature_end?: number;
+    humidity_end?: number;
+    wind_end?: string;
+    precipitation_end?: number;
+    sky_end?: string;
     user: User;
     appearances: ButterflyAppearance[];
 }

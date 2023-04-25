@@ -29,10 +29,10 @@
                 <MonitoringEnvironment
                     class="sm:px-4 w-full sm:w-1/2"
                     :hostedBy="state.monitoring.user.name"
-                    :temperature="state.monitoring.temperature"
-                    :humidity="state.monitoring.humidity"
-                    :wind="state.monitoring.wind"
-                    :sky="state.monitoring.sky"
+                    :temperature="state.monitoring.temperature_start"
+                    :humidity="state.monitoring.humidity_start"
+                    :wind="state.monitoring.wind_start"
+                    :sky="state.monitoring.sky_start"
                 />
                 <hr class="my-4 sm:mb-0 w-11/12 self-center" />
                 <MonitoringStats
