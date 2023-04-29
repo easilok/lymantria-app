@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+
+frontend:
+    build:
+        context: .
+        args:
+            LYMANTRIA_API_ENDPOINT: ${LYMANTRIA_API_ENDPOINT}
+    container_name: lymantria_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+
+# api:
+#     build:
+#         context: ../lymantria-api
+#     container_name: lymantria_api
+#     restart: unless-stopped
+#     ports:
+#       - "8080:8080"
