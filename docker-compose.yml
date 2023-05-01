@@ -1,15 +1,17 @@
 version: "3.3"
 services:
-
-frontend:
-    build:
-        context: .
-        args:
-            LYMANTRIA_API_ENDPOINT: ${LYMANTRIA_API_ENDPOINT}
-    container_name: lymantria_frontend
-    restart: unless-stopped
-    ports:
-      - "5173:5173"
+  frontend:
+      build:
+          context: .
+          args:
+              LYMANTRIA_API_ENDPOINT: ${LYMANTRIA_API_ENDPOINT}
+      container_name: lymantria_frontend
+      environment:
+        - VITE_API_URL=${LYMANTRIA_API_ENDPOINT}
+      restart: unless-stopped
+      ports:
+        - "5173:5173"
+        - "5174:80"
 
 # api:
 #     build:
