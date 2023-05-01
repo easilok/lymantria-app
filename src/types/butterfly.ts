@@ -15,7 +15,7 @@ export interface Butterfly {
     daytime: ButterflyDaytime;
     group?: string;
     appearances: number;
-    size?: number;
+    size?: string;
     image?: string;
     details: ButterflyDescription[];
     user: User;

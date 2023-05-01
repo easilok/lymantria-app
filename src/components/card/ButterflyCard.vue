@@ -51,7 +51,7 @@ const butterflyRarityClass = computed(() => `rarity-${props.butterfly.rarity}`);
         <div :class="['card-stats', butterflyRarityClass]">
             <DayTime :isDiurnal="butterfly.daytime == 'day'" />
             <StatAppearances :appearances="butterfly.appearances" />
-            <StatSize :size="butterfly.size" />
+            <StatSize :size="butterfly.size || ''" />
         </div>
     </article>
 </template>

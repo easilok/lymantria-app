@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { ButterflyAppearance } from '@/types/ButterflyAppearance';
+import type { ButterflyAppearance } from '@/types/monitoring';
 import dayjs from 'dayjs';
 
 const props = defineProps<{
@@ -34,10 +34,10 @@ const monitoringFamilies = computed(() => {
     const species: { [key: string]: number } = {};
 
     props.appearances.forEach((appearance) => {
-        if (species[appearance.butterfly]) {
-            species[appearance.butterfly] += 1;
+        if (species[appearance.butterfly.family]) {
+            species[appearance.butterfly.family] += 1;
         } else {
-            species[appearance.butterfly] = 1;
+            species[appearance.butterfly.family] = 1;
         }
     });
 
