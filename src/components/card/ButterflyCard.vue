@@ -116,6 +116,10 @@ const butterflyRarityClass = computed(() => `rarity-${props.butterfly.rarity}`);
         @apply text-gray-500 mb-1;
     }
 
+    .card-text__scientific {
+        @apply text-stone-800;
+    }
+
     .card-text__described {
         @apply text-sm text-gray-400;
     }

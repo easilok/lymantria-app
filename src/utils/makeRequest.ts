@@ -18,7 +18,6 @@ const makeRequest = async <D, R>(path: string, method: string, data?: D): Promis
             'Content-Type': 'application/json' // eslint-disable-line quote-props
         },
         mode: 'cors',
-        credentials: 'include',
         body: method !== 'get' ? JSON.stringify(data) : undefined
     });
 
