@@ -43,7 +43,7 @@ const butterflyRarityClass = computed(() => `rarity-${props.butterfly.rarity}`);
             <h4 class="card-text__common" v-if="butterfly.details && butterfly.details.length > 0">
                 <em>Common Name: {{ butterfly.details[0].common_name }}</em>
             </h4>
-            <p v-if="butterfly.details && butterfly.details.length > 0">
+            <p v-if="butterfly.details && butterfly.details.length > 0" :title="butterfly.details[0].description">
                 {{ butterfly.details[0].description.slice(0, 210) }}
                 {{ butterfly.details[0].description.length > 210 ? '...' : '' }}
             </p>
